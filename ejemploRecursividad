@@ -1,0 +1,75 @@
+#include <iostream>
+using namespace std;
+
+// Prototipos de funciones
+int factorial(int n);
+void cuentaregresiva(int n); // Cambiado a void porque no retorna valor
+int sumaimpar(int n);
+
+int main()
+{
+    int opcion, num;
+    do {
+        cout << "\n-----Menu de Recursividad-----" << endl;
+        cout << "1. Factorial" << endl;
+        cout << "2. Cuenta Regresiva" << endl;
+        cout << "3. Calcular suma impar" << endl;
+        cout << "4. Salir" << endl;
+        cout << "Elige una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            cout << "Ingrese el numero para factorial: ";
+            cin >> num;
+            cout << "El factorial de " << num << " es: " << factorial(num) << endl;
+            break;
+
+        case 2:
+            cout << "Desde que numero empezamos?: ";
+            cin >> num;
+            cout << "Contando: ";
+            cuentaregresiva(num);
+            cout << endl;
+            break;
+
+        case 3:
+            cout << "Ingrese el numero hasta donde sera la suma impar: ";
+            cin >> num;
+            cout << "La suma de los numeros impares entre 1 y " << num << " es: " << sumaimpar(num) << endl;
+            break;
+
+        case 4:
+            cout << "Adios !!! " << endl;
+            break;
+
+        default:
+            cout << "Opcion no valida." << endl;
+        }
+
+    } while (opcion != 4); // El while va fuera de la llave del do
+
+    return 0;
+}
+
+int factorial(int n) {
+    if ((n == 0) || (n == 1))
+        return 1;
+    else
+        return n * factorial(n - 1);
+}
+
+void cuentaregresiva(int n) {
+    if (n < 0) return;
+    cout << n << " ";
+    cuentaregresiva(n - 1);
+}
+
+int sumaimpar(int n) {
+    if (n <= 0)
+        return 0;
+    if (n % 2 != 0)
+        return n + sumaimpar(n - 2);
+    else
+        return sumaimpar(n - 1);
+}
