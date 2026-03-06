@@ -1,0 +1,75 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+using namespace std;
+
+int main() {
+  int opcion , base , altura;
+  do {
+      cout<<"MENU"<<endl;
+      cout<<"1. Calcular el area del triangulo"<<endl;
+      cout<<"2. Encontrar el mayor de 3 numeros"<<endl;
+      cout<<"3. Encontrar el promedio de N numeros"<<endl;
+      cout<<"0. Salir"<<endl;
+      cout<<"Ingresar la opcion: ";
+      cin>>opcion;
+      switch(opcion) {
+          case 1:
+            cout<<"Ingresa la base:: ";
+            cin>>base;
+            
+            cout<<"Ingresa la altura: ";
+            cin>>altura;
+            
+            cout<<"El area del triangulo es: "<<base*altura/2.0;
+            break;
+          case 2: {
+            int a, b, c, mayor;
+            cout<<"Ingresa el primer numero: ";
+            cin >> a ;
+            cout<<"Ingresa el segundo numero: ";
+            cin >> b ;
+            cout<<"Ingresa el tercer numero: ";
+            cin >> c; 
+            
+            mayor = a;
+            if(b > mayor)
+                mayor = b;
+            if(c > mayor)
+                mayor =c;
+                
+            cout << "El mayor es: " << mayor << endl;
+            break;
+          }  
+          case 3: {
+            int N;
+            float numero, suma=0, promedio;
+            cout<< "Ingresa la cantidad de numeros: ";
+            cin>> N;
+            for(int i = 1 ; i< N ; i++){
+                cout<< "Ingrese el numero" << i << ": ";
+                cin>>numero;
+                suma += numero;
+            }
+            promedio = suma / N;
+            cout << "El promedio es: " << promedio << endl;
+            break;
+          }    
+              
+          case 0: 
+            cout<< "Salir";
+            break;
+          default:
+            cout<<"Error en la opcion digitada"<<endl;
+            break;
+      }
+          
+      }while(opcion != 0);
+
+    return 0; }
