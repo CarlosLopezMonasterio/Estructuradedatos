@@ -27,7 +27,7 @@ int main() {
             cout<<"Ingresa la altura: ";
             cin>>altura;
             
-            cout<<"El area del triangulo es: "<<base*altura/2.0;
+            cout<<"El area del triangulo es: "<<base*altura/2.0;<<endl;
             break;
           case 2: {
             int a, b, c, mayor;
