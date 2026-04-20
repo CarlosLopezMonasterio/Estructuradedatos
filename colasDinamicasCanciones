@@ -1,0 +1,243 @@
+==============================Cola.h===========================================
+#pragma once
+#include "Nodo.h"
+#include "Cancion.h"
+class Cola
+{
+private:
+	Nodo* inicio;
+	Nodo* fin;
+	int cantidad;
+public:
+	Cola() {
+		inicio = NULL;
+		fin = NULL;
+		cantidad = 0;
+	}
+
+	bool estaVacia() {
+		return inicio == NULL;
+	}
+
+	bool estaLlena() {
+		return cantidad == 5;
+	}
+
+	void encolar(Cancion c) {
+		if (estaLlena()) {
+			cout << "La cola ya tiene 5 canciones.  No se puede encolar mas." << endl;
+			return;
+		}
+
+		Nodo* nuevo = new Nodo(c);
+
+		if (estaVacia()) {
+			inicio = nuevo;
+			fin = nuevo;
+		}
+		else {
+			fin->siguiente = nuevo;
+			fin = nuevo;
+		}
+
+		cantidad++;
+		cout << "Cancion encolada correctamente. " << endl;
+	}
+	void desencolar() {
+		if (estaVacia()) {
+			cout << "La cola esta vacia." << endl;
+			return;
+		}
+
+
+		Nodo* aux = inicio;
+		cout << "Cancion desencolada: " << endl;
+		aux->dato.mostrar();
+
+		inicio = inicio->siguiente;
+		delete aux;
+		cantidad--;
+
+		if (inicio == NULL) {
+			fin = NULL;
+		}
+	}
+	void mostrarCola() {
+		if (estaVacia()) {
+			cout << "La cola esta Vacia." << endl;
+			return;
+		}
+
+		Nodo* aux = inicio;
+		cout << "----------Canciones en la cola----------" << endl;
+		while (aux != NULL) {
+			aux->dato.mostrar();
+			cout << "-----------------------" << endl;
+			aux = aux->siguiente;
+		}
+	}
+	int getCantidad() {
+		return cantidad;
+	}
+};
+====================================Nodo.h=======================================
+#pragma once
+#include "Cancion.h"
+class Nodo
+{
+public: 
+	Cancion dato;
+	Nodo* siguiente;
+
+	Nodo(Cancion c) {
+		dato = c;
+		siguiente = NULL;
+	}
+};
+
+
+===============================Cancion.h===========================================
+#pragma once
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Cancion
+{
+private:
+	int codigo;
+	string titulo;
+	string artista;
+	double duracion; 
+	string genero;
+public:
+	Cancion() {
+		codigo = 0;
+		titulo = "";
+		string artista = "";
+		duracion = 0;
+		genero = "";
+	}
+	
+	Cancion(int c, string t, string a, double d, string g) {
+		codigo = c;
+		titulo = t;
+		artista = a;
+		duracion = d;
+		genero = g;
+	}
+
+	void setTitulo(string t) {
+		titulo = t;
+	}
+	
+	void setArtista(string a) {
+		artista = a;
+	}
+
+	void setDuracion(double d) {
+		duracion = d;
+	}
+
+	string getTitulo() {
+		return titulo;
+	}
+	string getArtista() {
+		return artista;
+	}
+	double getDuracion() {
+		return duracion;
+	}
+
+	void mostrar() {
+		cout << "Codigo: " << codigo << endl;
+		cout << "Titulo: " << titulo << endl;
+		cout << "Artista: " << artista << endl;
+		cout << "Duracion: " << duracion << "minutos" << endl;
+		cout << "Genero: " << genero << endl;
+	}
+
+
+};
+
+=============================EncolarCanciones.cpp=====================================
+// encolarCanciones.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+//
+
+#include <iostream>
+#include "Cola.h"
+using namespace std;
+
+int main()
+{
+    Cola cola;
+    int opcion;
+    int codigo;
+    string titulo, artista, genero;
+    double duracion;
+
+    do {
+        cout << "==========MENU==========" << endl;
+        cout << "1. Encolar cancion" << endl;
+        cout << "2. Desencolar cancion" << endl;
+        cout << "3. Mostrar canciones" << endl;
+        cout << "4. Salir" << endl;
+        cout << "Opcion: ";
+        cin >> opcion;
+        cin.ignore();
+
+        switch (opcion) {
+        case 1:
+            if (cola.estaLlena()) {
+                cout << "Ya se encolaron 5 canciones." << endl;
+            }
+            else {
+                cout << "Codigo: ";
+                cin >> codigo;
+                cin.ignore();
+                
+                cout << "Ingrese el titulo: ";
+                getline(cin, titulo);
+
+                cout << "Ingrese el artista: ";
+                getline(cin, artista);
+
+                cout << "Ingrese la duracion en minutos: ";
+                cin >> duracion;
+                cin.ignore();
+
+                cout << "Genero: ";
+                getline(cin, genero);
+                
+                Cancion c(codigo, titulo, artista, duracion, genero);
+                cola.encolar(c);
+            }
+            break;
+        case 2: 
+            cola.desencolar();
+            break;
+        case 3:
+            cola.mostrarCola();
+            break;
+        case 4:
+            cout << "Saliendo del programa..." << endl;
+            break;
+
+        default:
+            cout << "Opcion invalida. " << endl;
+        }
+
+    } while (opcion != 4);
+    return 0;
+
+}
+
+// Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
+// Depurar programa: F5 o menú Depurar > Iniciar depuración
+
+// Sugerencias para primeros pasos: 1. Use la ventana del Explorador de soluciones para agregar y administrar archivos
+//   2. Use la ventana de Team Explorer para conectar con el control de código fuente
+//   3. Use la ventana de salida para ver la salida de compilación y otros mensajes
+//   4. Use la ventana Lista de errores para ver los errores
+//   5. Vaya a Proyecto > Agregar nuevo elemento para crear nuevos archivos de código, o a Proyecto > Agregar elemento existente para agregar archivos de código existentes al proyecto
+//   6. En el futuro, para volver a abrir este proyecto, vaya a Archivo > Abrir > Proyecto y seleccione el archivo .sln
