@@ -1,0 +1,125 @@
+====================Nodo.h=====================
+#pragma once
+#include <iostream>
+using namespace std;
+typedef char DATA_TYPE;
+
+class Nodo
+{ 
+public:
+	DATA_TYPE data;
+	Nodo* next;
+};
+
+
+===================QueueDin.h=======================
+#pragma once
+#include "Nodo.h"
+#include <iostream>
+
+class QueueDin {
+
+	// atributos
+	int ITEMS, ITEMSIZE;
+	odo* cola, * cabeza;
+
+public:
+	// constructor
+	QueueDin();
+	int empty();
+	// destructor
+	~QueueDin() {}
+
+	/* agregar componente a la lista */
+	DATA_TYPE put(DATA_TYPE valor);
+
+	/* retirar elemento de la lista */
+	DATA_TYPE get();
+};
+
+
+===================QueueDin.cpp=======================
+
+#include "QueueDin.h"
+#include "Nodo.h"
+#include <iostream>
+using namespace std;
+typedef char DATA_TYPE;
+
+QueueDin::QueueDin() {
+	cola = NULL;
+	cabeza= NULL;
+	ITEMS= 0;
+	ITEMSIZE = sizeof(DATA_TYPE);
+}
+
+DATA_TYPE QueueDin ::put(DATA_TYPE valor)
+{
+Nodo* temp;
+
+	temp = new Nodo;
+	if (temp == NULL) return -1;
+
+	ITEMS++;
+	temp->data = valor;
+	temp->next = NULL;
+
+	if (cabeza == NULL)
+	{
+		cabeza = temp;
+		cola = temp;
+	}
+	else
+	{
+		cola->next = temp;
+		cola = temp;
+	}
+	return valor;
+}
+
+int QueueDin :: empty() { return ITEMS == 0; }
+
+DATA_TYPE QueueDin ::get()
+{
+	Nodo* temp;
+	DATA_TYPE d;
+
+	if (empty()) return -1;
+
+	d = cabeza->data;
+	temp = cabeza->next;
+	if (cabeza) delete cabeza;
+	cabeza = temp;
+	ITEMS--;
+	return d;
+}
+
+
+========================practicandoCola.cpp o main ===================================
+// practicandoCola.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+//
+#include "Nodo.h"
+#include "QueueDin.h"
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    QueueDin s;
+    DATA_TYPE d;
+
+    // llenando la cola
+    for (d = 'A'; d <= 'Z'; d++) {
+        s.put(d);
+        cout << d << " ";
+    }
+
+    cout << endl;
+    // vaciando la cola
+    while (!s.empty())
+        cout << (DATA_TYPE)s.get() << " ";
+
+    cout << "\nPara terminar presione <Enter>...";
+    cin.get();
+    return 0;
+}
