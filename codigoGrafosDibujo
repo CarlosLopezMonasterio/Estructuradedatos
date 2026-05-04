@@ -1,0 +1,64 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n = 4;
+    int matriz[4][4] = {0};
+
+    // Conexiones de tu código
+    matriz[0][1] = 1; matriz[1][0] = 1;
+    matriz[1][2] = 1; matriz[2][1] = 1;
+
+    cout << "Matriz de Adyacencia:" << endl;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << matriz[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+cout << "\nCopia esto en Edotor.net para ver el dibujo:" << endl;
+cout << "graph G {" << endl;
+for (int i = 0; i < n; i++) {
+    for (int j = i; j < n; j++) { // j=i para no repetir conexiones en grafo no dirigido
+        if (matriz[i][j] == 1) {
+            cout << "  " << i << " -- " << j << ";" << endl;
+        }
+    }
+}
+cout << "}" << endl;
+    return 0;
+}
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  #include <iostream>
+using namespace std;
+
+int main() {
+    int n = 4;
+    int matriz[4][4] = {0};
+
+    // Conexiones de tu código
+    matriz[0][1] = 1; matriz[1][0] = 1;
+    matriz[1][2] = 1; matriz[2][1] = 1;
+
+    cout << "Matriz de Adyacencia:" << endl;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << matriz[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    // --- NUEVA SECCIÓN: DIBUJO DEL GRAFO ---
+    cout << "\nVisualizacion del Grafo (ASCII):" << endl;
+    
+    // El grafo que definiste es: 0 - 1 - 2 y el 3 esta solo.
+    cout << "  (0) <---> (1) <---> (2)" << endl;
+    cout << "             ^" << endl;
+    cout << "             | (Nodo 3 esta aislado)" << endl;
+    cout << "            (3) " << endl;
+
+    return 0;
+}
