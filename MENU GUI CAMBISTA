@@ -1,0 +1,88 @@
+import tkinter as tk
+from tkinter import messagebox
+
+def bolivianos_a_soles():
+    try:
+        # 1. Obtener datos de la interfaz
+        bolivianos = float(entry_monto.get())
+        compra_usdt_bs = float(entry_compra_usdt_bs.get())
+        venta_usdt_soles = float(entry_venta_usdt_soles.get())
+        comision_pct = float(entry_comision.get()) if entry_comision.get() else 0
+
+        # 2. Cálculos lógicos
+        usdt_brutos = bolivianos / compra_usdt_bs
+        # Restamos la comisión al USDT
+        usdt_netos = usdt_brutos * (1 - (comision_pct / 100))
+        soles = usdt_netos * venta_usdt_soles
+
+        # 3. Mostrar resultado
+        resultado.set(
+            f"--- TICKET DE VENTA ---\n"
+            f"Cliente entrega: Bs {bolivianos:.2f}\n"
+            f"Comisión aplicada: {comision_pct}%\n"
+            f"-----------------------\n"
+            f"Usted entrega: S/ {soles:.2f}"
+        )
+
+    except ValueError:
+        messagebox.showerror("Error", "Por favor, llene todos los campos con números.")
+
+def soles_a_bolivianos():
+    try:
+        soles = float(entry_monto.get())
+        compra_usdt_bs = float(entry_compra_bs.get()) # Usamos la tasa de compra
+        venta_usdt_soles = float(entry_venta_soles.get())
+        comision_pct = float(entry_comision.get()) if entry_comision.get() else 0
+
+        # Calculamos cuánto USDT necesita el cliente para esos Soles
+        usdt_necesarios = soles / venta_usdt_soles
+        # Le sumamos la comisión (el cliente debe pagar ese extra)
+        usdt_total = usdt_necesarios / (1 - (comision_pct / 100))
+        bolivianos = usdt_total * compra_usdt_bs
+
+        resultado.set(
+            f"--- TICKET DE COMPRA ---\n"
+            f"Cliente recibe: S/ {soles:.2f}\n"
+            f"Comisión aplicada: {comision_pct}%\n"
+            f"-----------------------\n"
+            f"Cliente debe depositar: Bs {bolivianos:.2f}"
+        )
+
+    except ValueError:
+        messagebox.showerror("Error", "Por favor, llene todos los campos con números.")
+
+# --- Configuración de Interfaz ---
+ventana = tk.Tk()
+ventana.title("Panel de Control - Cambista")
+ventana.geometry("400x550")
+ventana.configure(bg="#e8eff1") # Un azul grisáceo muy profesional
+
+# Título Principal
+tk.Label(ventana, text="GESTIÓN DE CAMBIO", font=("Helvetica", 16, "bold"), bg="#e8eff1", fg="#2c3e50").pack(pady=20)
+
+# Función auxiliar para crear etiquetas y campos rápido (estilo profesora)
+def crear_entrada(texto):
+    tk.Label(ventana, text=texto, font=("Helvetica", 10, "bold"), bg="#e8eff1").pack()
+    entrada = tk.Entry(ventana, font=("Helvetica", 12), justify="center", bd=2)
+    entrada.pack(pady=5)
+    return entrada
+
+entry_monto = crear_entrada("MONTO A OPERAR")
+entry_compra_usdt_bs = crear_entrada("PRECIO COMPRA USDT (Bs)")
+entry_venta_usdt_soles = crear_entrada("PRECIO VENTA USDT (Soles)")
+entry_comision = crear_entrada("COMISIÓN A COBRAR (%)")
+entry_comision.insert(0, "0") # Valor inicial
+
+# Botones
+frame_btns = tk.Frame(ventana, bg="#e8eff1")
+frame_btns.pack(pady=20)
+
+tk.Button(frame_btns, text="Bs ➔ Soles", bg="#27ae60", fg="white", width=12, font=("Helvetica", 11, "bold"), command=bolivianos_a_soles).grid(row=0, column=0, padx=10)
+tk.Button(frame_btns, text="Soles ➔ Bs", bg="#2980b9", fg="white", width=12, font=("Helvetica", 11, "bold"), command=soles_a_bolivianos).grid(row=0, column=1, padx=10)
+
+# Área de Resultado
+resultado = tk.StringVar()
+resultado.set("Esperando operación...")
+tk.Label(ventana, textvariable=resultado, font=("Courier", 11), bg="white", fg="#2c3e50", relief="groove", padx=20, pady=15, width=35).pack(pady=10)
+
+ventana.mainloop()
