@@ -29,14 +29,17 @@ def bolivianos_a_soles():
 
 def soles_a_bolivianos():
     try:
+        # CORRECCIÓN AQUÍ: Se ajustaron los nombres para que coincidan con los Entry creados abajo
         soles = float(entry_monto.get())
-        compra_usdt_bs = float(entry_compra_bs.get()) # Usamos la tasa de compra
-        venta_usdt_soles = float(entry_venta_soles.get())
+        compra_usdt_bs = float(entry_compra_usdt_bs.get()) 
+        venta_usdt_soles = float(entry_venta_usdt_soles.get())
         comision_pct = float(entry_comision.get()) if entry_comision.get() else 0
 
         # Calculamos cuánto USDT necesita el cliente para esos Soles
         usdt_necesarios = soles / venta_usdt_soles
-        # Le sumamos la comisión (el cliente debe pagar ese extra)
+        
+        # Le sumamos la comisión (el cliente debe pagar ese extra para que tú ganes)
+        # Usamos la fórmula de "Gross Up" para que el porcentaje sea exacto
         usdt_total = usdt_necesarios / (1 - (comision_pct / 100))
         bolivianos = usdt_total * compra_usdt_bs
 
@@ -54,13 +57,13 @@ def soles_a_bolivianos():
 # --- Configuración de Interfaz ---
 ventana = tk.Tk()
 ventana.title("Panel de Control - Cambista")
-ventana.geometry("400x550")
-ventana.configure(bg="#e8eff1") # Un azul grisáceo muy profesional
+ventana.geometry("400x570") # Un poco más alto para que quepa todo bien
+ventana.configure(bg="#e8eff1") 
 
 # Título Principal
 tk.Label(ventana, text="GESTIÓN DE CAMBIO", font=("Helvetica", 16, "bold"), bg="#e8eff1", fg="#2c3e50").pack(pady=20)
 
-# Función auxiliar para crear etiquetas y campos rápido (estilo profesora)
+# Función auxiliar para crear entradas
 def crear_entrada(texto):
     tk.Label(ventana, text=texto, font=("Helvetica", 10, "bold"), bg="#e8eff1").pack()
     entrada = tk.Entry(ventana, font=("Helvetica", 12), justify="center", bd=2)
@@ -71,7 +74,7 @@ entry_monto = crear_entrada("MONTO A OPERAR")
 entry_compra_usdt_bs = crear_entrada("PRECIO COMPRA USDT (Bs)")
 entry_venta_usdt_soles = crear_entrada("PRECIO VENTA USDT (Soles)")
 entry_comision = crear_entrada("COMISIÓN A COBRAR (%)")
-entry_comision.insert(0, "0") # Valor inicial
+entry_comision.insert(0, "0") 
 
 # Botones
 frame_btns = tk.Frame(ventana, bg="#e8eff1")
