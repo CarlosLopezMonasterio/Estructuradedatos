@@ -1,0 +1,128 @@
+#include <iostream>
+#include "Pila.h"
+
+using namespace std;
+
+Pila::Pila()
+{
+    tope = -1;
+}
+
+bool Pila::Apilar(int& valor)
+{
+    if (tope == MAX - 1)
+    {
+        cout << "Error: pila llena (Overflow)" << endl;
+        return false;
+    }
+
+    tope++;
+    datos[tope] = valor;
+    return true;
+}
+
+bool Pila::Desapilar()
+{
+    if (tope == -1)
+    {
+        cerr << "Error: pila vacia (Underflow)" << endl;
+        return false;
+    }
+
+    tope--;
+    return true;
+}
+
+bool Pila::CimaPila(int& valor)
+{
+    if (PilaVacia())
+    {
+        cerr << "No hay elementos en la pila" << endl;
+        return false;
+    }
+
+    valor = datos[tope];
+    return true;
+}
+
+void Pila::VerPila()
+{
+    for (int i = tope; i >= 0; i--)
+    {
+        cout << datos[i] << endl;
+    }
+}
+
+bool Pila::PilaVacia()
+{
+    return tope == -1;
+}
+
+void Pila::LimpiarPila()
+{
+    tope = -1;
+}
+
+bool Pila::Iguales(Pila p)
+{
+    if (tope != p.tope)
+        return false;
+
+    for (int i = 0; i <= tope; i++)
+    {
+        if (datos[i] != p.datos[i])
+            return false;
+    }
+
+    return true;
+}
+#pragma once
+#define MAX 100
+
+class Pila
+{
+private:
+    int datos[MAX];
+    int tope;
+
+public:
+    Pila();
+    bool Apilar(int& valor);
+    bool Desapilar();
+    bool CimaPila(int& valor);
+    void LimpiarPila();
+    void VerPila();
+    bool PilaVacia();
+    bool Iguales(Pila p);
+};
+#include <iostream>
+#include "Pila.h"
+
+using namespace std;
+
+int main()
+{
+    Pila pila1;
+    int numero;
+    bool estado;
+
+    cout << "Ingrese numeros para apilar (-1 para finalizar): " << endl;
+    cin >> numero;
+
+    while (numero != -1)
+    {
+        estado = pila1.Apilar(numero);
+
+        if (estado)
+            cout << "Elemento agregado correctamente" << endl;
+        else
+            cout << "No se pudo agregar el elemento" << endl;
+
+        cin >> numero;
+    }
+
+    cout << "\nContenido de la pila:\n";
+    pila1.VerPila();
+
+    return 0;
+}
