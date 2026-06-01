@@ -1,0 +1,79 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+// Prototipos
+double calcularDiscriminante(int a, int b, int c);
+float solucionUnica(int a, int b);
+void calcularReales(int a, int b, int c, float &x1, float &x2);
+void calcularImaginarias(int a, int b, int d, float &x1, float &x2);
+
+int main() {
+
+    double disc;
+    int a, b, c;
+    float x1, x2;
+
+    cout << "Ingrese valor de a: ";
+    cin >> a;
+
+    cout << "Ingrese valor de b: ";
+    cin >> b;
+
+    cout << "Ingrese valor de c: ";
+    cin >> c;
+
+    disc = calcularDiscriminante(a, b, c);
+
+    if (disc == 0) {
+
+        float sol = solucionUnica(a, b);
+        cout << "La solucion unica es: " << sol << endl;
+
+    } 
+    else if (disc > 0) {
+
+        calcularReales(a, b, c, x1, x2);
+
+        cout << "Soluciones reales:" << endl;
+        cout << "x1: " << x1 << endl;
+        cout << "x2: " << x2 << endl;
+
+    } 
+    else {
+
+        calcularImaginarias(a, b, disc, x1, x2);
+
+        cout << "Soluciones imaginarias:" << endl;
+        cout << "x1: " << x1 << " + " << x2 << "i" << endl;
+        cout << "x2: " << x1 << " - " << x2 << "i" << endl;
+    }
+
+    return 0;
+}
+
+// ----------------------------
+// Funciones
+// ----------------------------
+
+double calcularDiscriminante(int a, int b, int c) {
+    return (b * b) - (4 * a * c);
+}
+
+float solucionUnica(int a, int b) {
+    return -b / (2.0f * a);
+}
+
+void calcularReales(int a, int b, int c, float &x1, float &x2) {
+
+    double disc = calcularDiscriminante(a, b, c);
+
+    x1 = (-b + sqrt(disc)) / (2 * a);
+    x2 = (-b - sqrt(disc)) / (2 * a);
+}
+
+void calcularImaginarias(int a, int b, int d, float &x1, float &x2) {
+
+    x1 = -b / (2.0f * a);
+    x2 = sqrt(-d) / (2.0f * a);
+}
