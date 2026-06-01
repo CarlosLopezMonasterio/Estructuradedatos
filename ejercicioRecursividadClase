@@ -1,0 +1,67 @@
+// ===================================
+// CONVERSIÓN DE BASE A DECIMAL
+// RECURSIVIDAD
+// ===================================
+
+#include <iostream>
+#include <string>
+#include <cmath>
+
+using namespace std;
+
+// Prototipos
+int convertirDigito(char c);
+int convertirBaseADecimal(string numero, int base, int posicion);
+
+// ===================================
+// MAIN
+// ===================================
+int main() {
+
+    string numeroEntrada;
+    int baseOrigen;
+
+    cout << "Ingrese el numero: ";
+    cin >> numeroEntrada;
+
+    cout << "Ingrese la base: ";
+    cin >> baseOrigen;
+
+    int resultadoDecimal = convertirBaseADecimal(numeroEntrada, baseOrigen, 0);
+
+    cout << "El valor en decimal es: " << resultadoDecimal << endl;
+
+    return 0;
+}
+
+// ===================================
+// FUNCIONES
+// ===================================
+
+// Convierte un caracter a su valor numérico
+int convertirDigito(char c) {
+
+    if (c >= '0' && c <= '9')
+        return c - '0';
+
+    else if (c >= 'A' && c <= 'Z')
+        return c - 'A' + 10;
+
+    else if (c >= 'a' && c <= 'z')
+        return c - 'a' + 10;
+
+    return -1;
+}
+
+// Función recursiva de conversión
+int convertirBaseADecimal(string numero, int base, int posicion) {
+
+    // Caso base
+    if (posicion == numero.length())
+        return 0;
+
+    int digito = convertirDigito(numero[posicion]);
+
+    return digito * pow(base, numero.length() - posicion - 1)
+         + convertirBaseADecimal(numero, base, posicion + 1);
+}
