@@ -1,0 +1,162 @@
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+#define MAX 10
+
+// ===============================
+// CLASE VECTOR
+// ===============================
+class Vector
+{
+private:
+    string datos[MAX];
+    int cantidad;
+
+public:
+    Vector();
+
+    void ingresar(int tam);
+    void imprimir();
+
+    void setValor(int pos, string valor);
+    string getValor(int pos) const;
+
+    void setTam(int tam);
+    int getTam() const;
+};
+
+// ===============================
+// IMPLEMENTACION VECTOR
+// ===============================
+
+Vector::Vector() {
+    cantidad = 0;
+}
+
+void Vector::ingresar(int tam) {
+    cantidad = tam;
+
+    for (int i = 0; i < cantidad; i++) {
+        cout << "Elemento [" << i << "]: ";
+        cin >> datos[i];
+    }
+}
+
+void Vector::imprimir() {
+    cout << "[ ";
+
+    for (int i = 0; i < cantidad; i++) {
+        cout << datos[i];
+
+        if (i < cantidad - 1)
+            cout << " ";
+    }
+
+    cout << " ]";
+}
+
+void Vector::setValor(int pos, string valor) {
+    datos[pos] = valor;
+}
+
+string Vector::getValor(int pos) const {
+    return datos[pos];
+}
+
+void Vector::setTam(int tam) {
+    cantidad = tam;
+}
+
+int Vector::getTam() const {
+    return cantidad;
+}
+
+// ===============================
+// FUNCIONES EXTERNAS
+// ===============================
+
+void cargarVectores(Vector v[], int n);
+void crearMatriz(Vector v[], Vector m[][MAX], int n);
+void mostrarVectores(Vector v[], int n);
+void mostrarMatriz(Vector m[][MAX], int n);
+
+// ===============================
+// MAIN
+// ===============================
+
+int main()
+{
+    int n;
+
+    Vector vectores[MAX];
+    Vector matriz[MAX][MAX];
+
+    do {
+        cout << "Ingrese el tamaño (1 - " << MAX << "): ";
+        cin >> n;
+    } while (n <= 0 || n > MAX);
+
+    cargarVectores(vectores, n);
+    mostrarVectores(vectores, n);
+
+    crearMatriz(vectores, matriz, n);
+    mostrarMatriz(matriz, n);
+
+    return 0;
+}
+
+// ===============================
+// FUNCIONES
+// ===============================
+
+void cargarVectores(Vector v[], int n) {
+
+    for (int i = 0; i < n; i++) {
+        cout << "Cargando vector [" << i << "]" << endl;
+        v[i].ingresar(n);
+    }
+}
+
+void crearMatriz(Vector v[], Vector m[][MAX], int n) {
+
+    for (int i = 0; i < n; i++) {
+
+        for (int j = 0; j < n; j++) {
+
+            m[i][j].setTam(n);
+
+            for (int k = 0; k < n; k++) {
+                m[i][j].setValor(k, v[i].getValor(j));
+            }
+        }
+    }
+}
+
+void mostrarVectores(Vector v[], int n) {
+
+    cout << "\nMostrando vectores:\n";
+
+    for (int i = 0; i < n; i++) {
+        cout << "V[" << i << "]: ";
+        v[i].imprimir();
+        cout << endl;
+    }
+}
+
+void mostrarMatriz(Vector m[][MAX], int n) {
+
+    cout << "\nMatriz generada:\n";
+
+    for (int i = 0; i < n; i++) {
+
+        for (int j = 0; j < n; j++) {
+            m[i][j].imprimir();
+            cout << " ";
+        }
+
+        cout << endl;
+    }
+}
