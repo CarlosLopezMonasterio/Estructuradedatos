@@ -1,0 +1,89 @@
+// ===============================
+// TIPOS DE DATOS EN C++
+// ===============================
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// -------------------------------
+// TIPOS BÁSICOS
+// -------------------------------
+int numeroEntero = 20;
+float valorDecimal = 1.75f;
+double constantePi = 3.141592;
+char letraInicial = 'S';
+bool estado = true;
+
+// -------------------------------
+// MODIFICADORES DE TIPO
+// -------------------------------
+short int pequeno = 10;
+long long int grande = 999999999;
+unsigned int edadSinSigno = 25;
+
+// -------------------------------
+// TIPOS COMPUESTOS
+// -------------------------------
+string texto = "Sofia";
+int arreglo[3] = {1, 2, 3};
+
+union Dato {
+    int entero;
+    float decimal;
+    char caracter;
+};
+
+enum DiasSemana { LUNES, MARTES, MIERCOLES, JUEVES, VIERNES };
+
+// -------------------------------
+// ESTRUCTURA DEFINIDA POR USUARIO
+// -------------------------------
+struct Persona {
+    string nombre;
+    int edad;
+};
+
+// ===============================
+// PROGRAMA PRINCIPAL
+// ===============================
+int main() {
+
+    int edad;
+    float altura;
+    char inicial;
+    bool esEstudiante;
+
+    string nombreUsuario;
+    int notas[3] = {80, 90, 100};
+
+    Persona persona;
+
+    cout << "Ingrese su nombre: ";
+    cin >> nombreUsuario;
+
+    cout << "Ingrese su edad: ";
+    cin >> edad;
+
+    cout << "Ingrese su altura: ";
+    cin >> altura;
+
+    cout << "Ingrese inicial del apellido: ";
+    cin >> inicial;
+
+    esEstudiante = true;
+
+    persona.nombre = nombreUsuario;
+    persona.edad = edad;
+
+    cout << "\n--- DATOS INGRESADOS ---\n";
+    cout << "Nombre: " << persona.nombre << endl;
+    cout << "Edad: " << persona.edad << endl;
+    cout << "Altura: " << altura << endl;
+    cout << "Inicial: " << inicial << endl;
+    cout << "Estudiante: " << esEstudiante << endl;
+    cout << "Primera nota: " << notas[0] << endl;
+
+    return 0;
+}
