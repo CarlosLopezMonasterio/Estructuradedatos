@@ -1,0 +1,58 @@
+#include <iostream>
+#include "Vector.h"
+
+#define MAX 10
+
+using namespace std;
+
+int main() {
+
+    int arreglo[MAX], tamanio, opcion;
+
+    Vector objVector;
+
+    // Validación del tamaño del vector
+    do {
+        cout << "Ingrese el tamaño del vector: ";
+        cin >> tamanio;
+
+    } while (tamanio <= 0 || tamanio > MAX);
+
+    do {
+        cout << "\n----- MENU PRINCIPAL -----\n";
+        cout << "| 1. Ingresar vector      |\n";
+        cout << "| 2. Mostrar vector       |\n";
+        cout << "| 3. Ordenar vector       |\n";
+        cout << "| 0. Salir                |\n";
+        cout << "--------------------------\n";
+
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+
+        case 1:
+            objVector.cargarVector(arreglo, tamanio);
+            break;
+
+        case 2:
+            objVector.mostrarVector(arreglo, tamanio);
+            break;
+
+        case 3:
+            objVector.ordenarVector(arreglo, tamanio);
+            break;
+
+        case 0:
+            cout << "Saliendo del programa..." << endl;
+            break;
+
+        default:
+            cout << "Opcion invalida, intente nuevamente..." << endl;
+            break;
+        }
+
+    } while (opcion != 0);
+
+    return 0;
+}
