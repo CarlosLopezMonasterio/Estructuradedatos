@@ -1,0 +1,395 @@
+
+#include <iostream>
+#include <string>
+#include <cmath>
+
+using namespace std;
+
+#define MAX 100
+
+// ===============================
+// CLASE VECTOR
+// ===============================
+class Vector {
+
+private:
+    int datos[MAX];
+    int auxiliar[MAX];
+    int cantidad;
+
+public:
+    Vector();
+
+    void ingresarVector();
+    void mostrarVector();
+
+    int obtenerMayor();
+    int obtenerMenor();
+    double calcularPromedio();
+
+    void invertirVector();
+    void copiarInvertido();
+    bool esCapicua();
+
+    void promedioTripletas();
+    void numeroLiteral(int numero);
+    void mayorDiferencia();
+
+    void concatenarVectores();
+    void intercalarVectores();
+
+    void contarElementos();
+    void eliminarDuplicados();
+
+    void ordenarVector();
+
+    void fibonacci();
+};
+
+// ===============================
+// IMPLEMENTACION
+// ===============================
+
+Vector::Vector() {
+    cantidad = 0;
+}
+
+// 1
+void Vector::ingresarVector() {
+
+    cout << "Ingrese tamaño del vector: ";
+    cin >> cantidad;
+
+    for (int i = 0; i < cantidad; i++) {
+        cin >> datos[i];
+    }
+}
+
+// 2
+void Vector::mostrarVector() {
+
+    for (int i = 0; i < cantidad; i++) {
+        cout << datos[i] << " ";
+    }
+
+    cout << endl;
+}
+
+// 3
+int Vector::obtenerMayor() {
+
+    int mayor = datos[0];
+
+    for (int i = 1; i < cantidad; i++) {
+        if (datos[i] > mayor)
+            mayor = datos[i];
+    }
+
+    return mayor;
+}
+
+// 4
+int Vector::obtenerMenor() {
+
+    int menor = datos[0];
+
+    for (int i = 1; i < cantidad; i++) {
+        if (datos[i] < menor)
+            menor = datos[i];
+    }
+
+    return menor;
+}
+
+// 5
+double Vector::calcularPromedio() {
+
+    int suma = 0;
+
+    for (int i = 0; i < cantidad; i++) {
+        suma += datos[i];
+    }
+
+    return (double)suma / cantidad;
+}
+
+// 6
+void Vector::copiarInvertido() {
+
+    for (int i = 0; i < cantidad; i++) {
+        auxiliar[i] = datos[cantidad - 1 - i];
+    }
+
+    cout << "Vector invertido: ";
+
+    for (int i = 0; i < cantidad; i++) {
+        cout << auxiliar[i] << " ";
+    }
+
+    cout << endl;
+}
+
+// 7
+void Vector::invertirVector() {
+
+    for (int i = 0; i < cantidad / 2; i++) {
+        int temp = datos[i];
+        datos[i] = datos[cantidad - 1 - i];
+        datos[cantidad - 1 - i] = temp;
+    }
+}
+
+// 8
+bool Vector::esCapicua() {
+
+    for (int i = 0; i < cantidad / 2; i++) {
+        if (datos[i] != datos[cantidad - 1 - i])
+            return false;
+    }
+
+    return true;
+}
+
+// 9
+void Vector::promedioTripletas() {
+
+    double p;
+
+    for (int i = 0; i < cantidad - 2; i++) {
+        p = (datos[i] + datos[i + 1] + datos[i + 2]) / 3.0;
+        cout << "Promedio " << i + 1 << " = " << p << endl;
+    }
+}
+
+// 10
+void Vector::numeroLiteral(int numero) {
+
+    switch (numero) {
+
+        case 0: cout << "CERO"; break;
+        case 1: cout << "UNO"; break;
+        case 2: cout << "DOS"; break;
+        case 3: cout << "TRES"; break;
+        case 4: cout << "CUATRO"; break;
+        case 5: cout << "CINCO"; break;
+        case 6: cout << "SEIS"; break;
+        case 7: cout << "SIETE"; break;
+        case 8: cout << "OCHO"; break;
+        case 9: cout << "NUEVE"; break;
+        case 10: cout << "DIEZ"; break;
+        case 11: cout << "ONCE"; break;
+        case 12: cout << "DOCE"; break;
+        case 13: cout << "TRECE"; break;
+        case 14: cout << "CATORCE"; break;
+        case 15: cout << "QUINCE"; break;
+        case 16: cout << "DIECISEIS"; break;
+        case 17: cout << "DIECISIETE"; break;
+        case 18: cout << "DIECIOCHO"; break;
+        case 19: cout << "DIECINUEVE"; break;
+        case 20: cout << "VEINTE"; break;
+
+        default: cout << "Fuera de rango";
+    }
+
+    cout << endl;
+}
+
+// 11
+void Vector::mayorDiferencia() {
+
+    float mayor = 0;
+
+    for (int i = 0; i < cantidad - 1; i++) {
+
+        float dif = abs(datos[i + 1] - datos[i]);
+
+        if (dif > mayor)
+            mayor = dif;
+    }
+
+    cout << "Mayor diferencia: " << mayor << endl;
+}
+
+// 12
+void Vector::concatenarVectores() {
+
+    int m;
+
+    cout << "Tamaño segundo vector: ";
+    cin >> m;
+
+    for (int i = 0; i < m; i++)
+        cin >> auxiliar[i];
+
+    for (int i = 0; i < m; i++)
+        datos[cantidad + i] = auxiliar[i];
+
+    cantidad += m;
+}
+
+// 13
+void Vector::intercalarVectores() {
+
+    int m;
+    int b[MAX], c[MAX];
+
+    cout << "Tamaño segundo vector: ";
+    cin >> m;
+
+    for (int i = 0; i < m; i++)
+        cin >> b[i];
+
+    int i = 0, j = 0, k = 0;
+
+    while (i < cantidad && j < m) {
+
+        if (datos[i] <= b[j])
+            c[k++] = datos[i++];
+        else
+            c[k++] = b[j++];
+    }
+
+    while (i < cantidad)
+        c[k++] = datos[i++];
+
+    while (j < m)
+        c[k++] = b[j++];
+
+    cout << "Resultado: ";
+
+    for (int t = 0; t < k; t++)
+        cout << c[t] << " ";
+
+    cout << endl;
+}
+
+// 14
+void Vector::contarElementos() {
+
+    int pos = 0, neg = 0, cero = 0;
+
+    for (int i = 0; i < cantidad; i++) {
+
+        if (datos[i] > 0)
+            pos++;
+        else if (datos[i] < 0)
+            neg++;
+        else
+            cero++;
+    }
+
+    cout << "Positivos: " << pos << endl;
+    cout << "Negativos: " << neg << endl;
+    cout << "Ceros: " << cero << endl;
+}
+
+// 15
+void Vector::eliminarDuplicados() {
+
+    for (int i = 0; i < cantidad; i++) {
+
+        for (int j = i + 1; j < cantidad; j++) {
+
+            if (datos[i] == datos[j]) {
+
+                for (int k = j; k < cantidad - 1; k++)
+                    datos[k] = datos[k + 1];
+
+                cantidad--;
+                j--;
+            }
+        }
+    }
+}
+
+// 16
+void Vector::ordenarVector() {
+
+    for (int i = 0; i < cantidad - 1; i++) {
+
+        for (int j = i + 1; j < cantidad; j++) {
+
+            if (datos[i] > datos[j]) {
+
+                int temp = datos[i];
+                datos[i] = datos[j];
+                datos[j] = temp;
+            }
+        }
+    }
+}
+
+// 17
+void Vector::fibonacci() {
+
+    cout << "Cantidad: ";
+    cin >> cantidad;
+
+    datos[0] = 0;
+    datos[1] = 1;
+
+    for (int i = 2; i < cantidad; i++)
+        datos[i] = datos[i - 1] + datos[i - 2];
+
+    mostrarVector();
+}
+
+// ===============================
+// MAIN
+// ===============================
+int main() {
+
+    Vector v;
+    int op, n;
+
+    do {
+
+        cout << "\n========= MENU =========\n";
+        cout << "1  Ingresar vector\n";
+        cout << "2  Mostrar vector\n";
+        cout << "3  Mayor\n";
+        cout << "4  Menor\n";
+        cout << "5  Promedio\n";
+        cout << "6  Copiar invertido\n";
+        cout << "7  Capicua\n";
+        cout << "8  Promedio tripletas\n";
+        cout << "9  Numero literal\n";
+        cout << "10 Mayor diferencia\n";
+        cout << "11 Concatenar\n";
+        cout << "12 Intercalar\n";
+        cout << "13 Contar elementos\n";
+        cout << "14 Eliminar duplicados\n";
+        cout << "15 Invertir vector\n";
+        cout << "16 Ordenar\n";
+        cout << "17 Fibonacci\n";
+        cout << "0  Salir\n";
+
+        cout << "Opcion: ";
+        cin >> op;
+
+        switch (op) {
+
+        case 1: v.ingresarVector(); break;
+        case 2: v.mostrarVector(); break;
+        case 3: cout << v.obtenerMayor() << endl; break;
+        case 4: cout << v.obtenerMenor() << endl; break;
+        case 5: cout << v.calcularPromedio() << endl; break;
+        case 6: v.copiarInvertido(); break;
+        case 7: cout << (v.esCapicua() ? "SI" : "NO") << endl; break;
+        case 8: v.promedioTripletas(); break;
+        case 9: cin >> n; v.numeroLiteral(n); break;
+        case 10: v.mayorDiferencia(); break;
+        case 11: v.concatenarVectores(); break;
+        case 12: v.intercalarVectores(); break;
+        case 13: v.contarElementos(); break;
+        case 14: v.eliminarDuplicados(); break;
+        case 15: v.invertirVector(); break;
+        case 16: v.ordenarVector(); break;
+        case 17: v.fibonacci(); break;
+
+        }
+
+    } while (op != 0);
+
+    return 0;
+}
