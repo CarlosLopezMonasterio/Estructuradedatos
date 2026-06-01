@@ -1,0 +1,195 @@
+#pragma once
+#include <iostream>
+using namespace std;
+
+typedef char TIPO_DATO;
+
+class Nodo {
+public:
+    TIPO_DATO valor;
+    Nodo* siguiente;
+    Nodo* anterior;
+
+    Nodo(TIPO_DATO dato);
+};
+
+#include "Nodo.h"
+
+Nodo::Nodo(TIPO_DATO dato) {
+    valor = dato;
+    siguiente = nullptr;
+    anterior = nullptr;
+}
+
+#pragma once
+#include <iostream>
+#include "Nodo.h"
+using namespace std;
+
+class ColaDoble {
+private:
+    Nodo* inicio;
+    Nodo* fin;
+    int cantidadElementos;
+
+public:
+    ColaDoble();
+    ~ColaDoble();
+
+    void insertarFinal(TIPO_DATO dato);
+    void insertarInicio(TIPO_DATO dato);
+
+    TIPO_DATO eliminarInicio();
+    TIPO_DATO eliminarFinal();
+
+    bool vacia() const;
+    void mostrarElementos() const;
+};
+
+#include "ColaDoble.h"
+
+// Constructor
+ColaDoble::ColaDoble() {
+    inicio = nullptr;
+    fin = nullptr;
+    cantidadElementos = 0;
+}
+
+// Destructor
+ColaDoble::~ColaDoble() {
+    while (!vacia()) {
+        eliminarInicio();
+    }
+}
+
+// Insertar al final
+void ColaDoble::insertarFinal(TIPO_DATO dato) {
+    Nodo* nuevo = new Nodo(dato);
+
+    if (!inicio) {
+        inicio = fin = nuevo;
+    }
+    else {
+        fin->siguiente = nuevo;
+        nuevo->anterior = fin;
+        fin = nuevo;
+    }
+
+    cantidadElementos++;
+}
+
+// Insertar al inicio
+void ColaDoble::insertarInicio(TIPO_DATO dato) {
+    Nodo* nuevo = new Nodo(dato);
+
+    if (!inicio) {
+        inicio = fin = nuevo;
+    }
+    else {
+        inicio->anterior = nuevo;
+        nuevo->siguiente = inicio;
+        inicio = nuevo;
+    }
+
+    cantidadElementos++;
+}
+
+// Eliminar desde el inicio
+TIPO_DATO ColaDoble::eliminarInicio() {
+    if (vacia())
+        return -1;
+
+    TIPO_DATO dato = inicio->valor;
+
+    Nodo* auxiliar = inicio;
+    inicio = inicio->siguiente;
+
+    if (inicio)
+        inicio->anterior = nullptr;
+    else
+        fin = nullptr;
+
+    delete auxiliar;
+    cantidadElementos--;
+
+    return dato;
+}
+
+// Eliminar desde el final
+TIPO_DATO ColaDoble::eliminarFinal() {
+    if (vacia())
+        return -1;
+
+    TIPO_DATO dato = fin->valor;
+
+    Nodo* auxiliar = fin;
+    fin = fin->anterior;
+
+    if (fin)
+        fin->siguiente = nullptr;
+    else
+        inicio = nullptr;
+
+    delete auxiliar;
+    cantidadElementos--;
+
+    return dato;
+}
+
+// Verificar si está vacía
+bool ColaDoble::vacia() const {
+    return cantidadElementos == 0;
+}
+
+// Mostrar contenido
+void ColaDoble::mostrarElementos() const {
+    if (!inicio) {
+        cout << "No existen elementos en la cola.\n";
+        return;
+    }
+
+    Nodo* recorrido = inicio;
+
+    cout << "Contenido de la cola: ";
+
+    while (recorrido) {
+        cout << "[" << recorrido->valor << "] ";
+        recorrido = recorrido->siguiente;
+    }
+
+    cout << endl;
+}
+
+#include <iostream>
+#include "Nodo.h"
+#include "ColaDoble.h"
+
+using namespace std;
+
+int main() {
+
+    ColaDoble cola;
+    TIPO_DATO caracter;
+
+    // Agregar letras al final
+    for (caracter = 'A'; caracter <= 'Z'; caracter++) {
+        cola.insertarFinal(caracter);
+    }
+
+    // Agregar números al inicio
+    for (caracter = 9; caracter >= 0; caracter--) {
+        cola.insertarInicio(caracter + '0');
+    }
+
+    cola.mostrarElementos();
+
+    cout << "\nEliminando elementos desde el frente:\n";
+
+    while (!cola.vacia()) {
+        cout << cola.eliminarInicio() << " ";
+    }
+
+    cout << "\n\nPrograma terminado.\n";
+
+    return 0;
+}
